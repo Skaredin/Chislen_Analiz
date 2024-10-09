@@ -76,6 +76,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Chapter_5.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +93,9 @@
     </Compile>
     <Compile Include="Chapter1-2.xaml.cs">
       <DependentUpon>Chapter1-2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Chapter_5.xaml.cs">
+      <DependentUpon>Chapter_5.xaml</DependentUpon>
     </Compile>
     <Compile Include="LagrangeInterpolation.cs" />
     <Compile Include="MainWindow.xaml.cs">

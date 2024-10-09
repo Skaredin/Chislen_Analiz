@@ -43,5 +43,12 @@ namespace Chislen_Analiz
 			Chapter_3.Show();
 
 		}
+
+		private void Button_Click_3(object sender, RoutedEventArgs e)
+		{
+			Chapter_5 chapter_5 = new Chapter_5();	
+			chapter_5.Show();
+
+		}
     }
 }
