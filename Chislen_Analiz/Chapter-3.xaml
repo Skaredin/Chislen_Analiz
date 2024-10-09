@@ -16,10 +16,10 @@
         <Label Content="Результат (Newton):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,150,0,0"/>
         <TextBox Name="NewtonResult" HorizontalAlignment="Left" Height="25" Margin="10,170,0,0" VerticalAlignment="Top" Width="400"/>
 
-        <DataGrid Name="ResultDataGrid" Margin="10,200,10,200" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Name="StepsDataGrid" Margin="10,200,10,200" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Шаг" Binding="{Binding Step}" Width="*"/>
-                <DataGridTextColumn Header="Результаты" Binding="{Binding Result}" Width="*"/>
+                <DataGridTextColumn Header="Результат" Binding="{Binding Result}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
