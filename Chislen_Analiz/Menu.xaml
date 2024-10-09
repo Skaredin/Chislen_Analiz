@@ -9,7 +9,7 @@
     <Grid Height="142" Width="157" >
         <Button Content="Метод Гауса" HorizontalAlignment="Left" Margin="27,20,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         <Button Content="Метод прогонки" HorizontalAlignment="Left" Margin="27,45,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Button Content="Интерполсяция" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top"/>
+        <Button Content="Интерполсяция" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
         <Button Content="Сплайны" HorizontalAlignment="Left" Margin="27,95,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

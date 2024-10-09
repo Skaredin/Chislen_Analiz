@@ -36,5 +36,12 @@ namespace Chislen_Analiz
 			Chapter1_2 chapter1_2 = new Chapter1_2();
 			chapter1_2.Show();
 		}
-	}
+
+		private void Button_Click_2(object sender, RoutedEventArgs e)
+		{
+			Chapter_3 Chapter_3 = new Chapter_3();
+			Chapter_3.Show();
+
+		}
+    }
 }
