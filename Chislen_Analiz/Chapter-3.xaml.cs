@@ -15,6 +15,7 @@ namespace Chislen_Analiz
 		public Chapter_3()
 		{
 			InitializeComponent();
+			PointsInput.Text= "x,0,2,3; y,2,0,4";
 		}
 
 		private void CalculateLagrange_Click(object sender, RoutedEventArgs e)
