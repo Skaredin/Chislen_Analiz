@@ -12,6 +12,10 @@ namespace Chislen_Analiz
 		public MainWindow()
 		{
 			InitializeComponent();
+			Equation1TextBox.Text = "x1 - x2 + 2x3 - x4 =1";
+			Equation2TextBox.Text = "2x +3x3 +x4 = 4";
+			Equation3TextBox.Text = "x1 +x2 +3x3 -x4 = 2";
+			Equation4TextBox.Text = "2x +x2 +5x3 - 2x4 = 3";
 		}
 
 		private void SolveButton_Click(object sender, RoutedEventArgs e)

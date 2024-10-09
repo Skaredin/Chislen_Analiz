@@ -23,6 +23,11 @@ namespace Chislen_Analiz
 		public Chapter1_2()
 		{
 			InitializeComponent();
+			Equation1TextBox.Text = "3x1 + x2 = 5";
+			Equation2TextBox.Text = "x1 + 2x2 + x3 = 6";
+			Equation3TextBox.Text = "3x2 + 9x3 + 6x4 = 25";
+			Equation4TextBox.Text = "2x3 + 4x4 = 5";
+
 		}
 		private void SolveButton_Click(object sender, RoutedEventArgs e)
 		{
