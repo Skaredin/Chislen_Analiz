@@ -28,7 +28,16 @@
         <DataGrid Name="InterpolatedDataGrid" Margin="746,-6,10,270" AutoGenerateColumns="False" CanUserAddRows="False" Height="200">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Значение x" Binding="{Binding X}" Width="*"/>
-                <DataGridTextColumn Header="Интерполированное значение" Binding="{Binding InterpolatedValue}" Width="*"/>
+                <DataGridTextColumn Header="Spline1" Binding="{Binding Spline1}" Width="*"/>
+                <DataGridTextColumn Header="Spline2" Binding="{Binding Spline2}" Width="*"/>
+                <DataGridTextColumn Header="Spline3" Binding="{Binding Spline3}" Width="*"/>
+                <DataGridTextColumn Header="Spline4" Binding="{Binding Spline4}" Width="*"/>
+                <DataGridTextColumn Header="Spline5" Binding="{Binding Spline5}" Width="*"/>
+                <DataGridTextColumn Header="Spline6" Binding="{Binding Spline6}" Width="*"/>
+                <DataGridTextColumn Header="Spline7" Binding="{Binding Spline7}" Width="*"/>
+                <DataGridTextColumn Header="Spline8" Binding="{Binding Spline8}" Width="*"/>
+                <DataGridTextColumn Header="Spline9" Binding="{Binding Spline9}" Width="*"/>
+                <DataGridTextColumn Header="Spline10" Binding="{Binding Spline10}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
