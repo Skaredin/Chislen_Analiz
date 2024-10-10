@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using OxyPlot.Annotations;
 
 namespace Chislen_Analiz
 {
@@ -28,32 +29,49 @@ namespace Chislen_Analiz
 		public class InputData
 		{
 			public double Y { get; set; }
-			public double Spline1 { get; set; }
-			public double Spline2 { get; set; }
-			public double Spline3 { get; set; }
-			public double Spline4 { get; set; }
-			public double Spline5 { get; set; }
-			public double Spline6 { get; set; }
-			public double Spline7 { get; set; }
-			public double Spline8 { get; set; }
-			public double Spline9 { get; set; }
-			public double Spline10 { get; set; }
+			public double X1 { get; set; }
+			public double X2 { get; set; }
+			public double X3 { get; set; }
+			public double X4 { get; set; }
+			public double X5 { get; set; }
+			public double X6 { get; set; }
+			public double X7 { get; set; }
+			public double X8 { get; set; }
+			public double X9 { get; set; }
+			public double X10 { get; set; }
 		}
 
 		public ObservableCollection<InputData> InputDataList { get; set; }
+		public ObservableCollection<InterpolatedData> InterpolatedDataList { get; set; } // Новая коллекция для интерполированных данных
 
 		public Chapter_5()
 		{
 			InitializeComponent();
 			InputDataList = new ObservableCollection<InputData>();
+			InterpolatedDataList = new ObservableCollection<InterpolatedData>(); // Инициализация коллекции интерполированных данных
 
 			double[,] values = {
-				{1.0, 0.8, 1.0, 1.2, 1.1, 0.8, 1.0, 0.9, 1.2, 1.2, 1.2},
-				{1.2, 1.9, 2.1, 2.2, 2.2, 1.9, 1.8, 2.0, 2.2, 2.2, 2.0},
-				{1.4, 2.7, 2.8, 3.0, 3.0, 3.1, 2.8, 2.9, 3.1, 3.2, 3.1},
-				{1.6, 3.9, 4.0, 4.1, 4.2, 4.0, 3.8, 3.8, 4.0, 4.2, 4.1},
-				{1.8, 4.8, 5.0, 4.9, 5.1, 4.9, 4.7, 4.9, 5.0, 5.1, 5.0},
-				{2.0, 5.8, 5.9, 6.1, 6.0, 5.8, 6.0, 5.9, 6.2, 6.0, 6.1}
+				 // Первая таблица
+			  {1.0, 1.0, 1.1, 0.9, 0.9, 0.8, 1.1, 1.0, 1.2, 1.2, 1.1},
+	//{1.2, 2.1, 2.2, 2.0, 1.9, 2.0, 2.2, 2.1, 1.8, 2.0, 1.9},
+	//{1.4, 2.9, 3.2, 3.0, 3.2, 2.9, 3.2, 3.1, 3.2, 3.0, 3.2},
+	//{1.6, 3.8, 4.2, 3.8, 3.8, 4.0, 4.2, 3.8, 4.1, 3.8, 3.8},
+	//{1.8, 5.2, 5.2, 5.1, 5.1, 5.2, 5.1, 5.2, 5.0, 5.2, 4.9},
+	//{2.0, 5.9, 6.0, 5.8, 6.1, 5.8, 5.9, 6.2, 6.1, 6.1, 5.8},
+    // Вторая таблица
+    {1.0, 0.8, 0.8, 1.1, 0.8, 1.0, 0.9, 1.0, 1.2, 1.2, 1.2},
+	{1.2, 2.0, 2.2, 1.9, 1.8, 2.2, 2.2, 1.9, 2.0, 2.2, 2.0},
+	{1.4, 2.8, 2.9, 3.0, 3.2, 2.9, 3.0, 3.1, 3.2, 3.0, 3.2},
+	{1.6, 4.0, 4.2, 3.8, 4.1, 4.2, 3.8, 4.0, 4.1, 3.8, 4.0},
+	{1.8, 5.1, 5.2, 5.2, 4.8, 5.2, 5.1, 5.0, 4.9, 5.2, 4.8},
+	{2.0, 6.0, 5.9, 6.1, 6.1, 5.8, 6.2, 6.1, 6.0, 6.1, 5.8},
+    // Третья таблица
+    //{1.0, 2.8, 3.8, 4.5, 5.4, 10.0, 9.2, 0.12, 0.10, 0.12, 0.12},
+	//{1.2, 3.8, 3.7, 4.9, 5.7, 11.0, 8.9, 0.22, 0.21, 0.24, 0.25},
+	//{1.4, 5.4, 5.0, 3.2, 12.8, 8.0, 6.8, 0.34, 0.38, 0.30, 0.40},
+	//{1.6, 8.2, 8.3, 4.8, 13.1, 13.7, 8.1, 0.48, 0.40, 0.44, 0.42},
+	//{1.8, 4.0, 4.2, 4.3, 8.4, 7.2, 5.6, 0.50, 0.48, 0.50, 0.50},
+	//{2.0, 6.0, 6.9, 7.1, 6.0, 8.6, 4.6, 0.60, 0.56, 0.60, 0.62}
 			};
 
 			for (int i = 0; i < values.GetLength(0); i++)
@@ -61,20 +79,21 @@ namespace Chislen_Analiz
 				InputDataList.Add(new InputData
 				{
 					Y = values[i, 0],
-					Spline1 = values[i, 1],
-					Spline2 = values[i, 2],
-					Spline3 = values[i, 3],
-					Spline4 = values[i, 4],
-					Spline5 = values[i, 5],
-					Spline6 = values[i, 6],
-					Spline7 = values[i, 7],
-					Spline8 = values[i, 8],
-					Spline9 = values[i, 9],
-					Spline10 = values[i, 10]
+					X1 = values[i, 1],
+					X2 = values[i, 2],
+					X3 = values[i, 3],
+					X4 = values[i, 4],
+					X5 = values[i, 5],
+					X6 = values[i, 6],
+					X7 = values[i, 7],
+					X8 = values[i, 8],
+					X9 = values[i, 9],
+					X10 = values[i, 10]
 				});
 			}
 
 			InputDataGrid.ItemsSource = InputDataList;
+			InterpolatedDataGrid.ItemsSource = InterpolatedDataList; // Установка источника данных для таблицы интерполированных данных
 		}
 
 		private void CalculateButton_Click(object sender, RoutedEventArgs e)
@@ -83,12 +102,13 @@ namespace Chislen_Analiz
 			{
 				var plotModel = new PlotModel { Title = "Кубическая интерполяция" };
 				var interpolatedValues = new InterpolatedData { X = inputX };
+				InterpolatedDataList.Clear();
 
 				// Проход по всем сплайнам
 				for (int i = 1; i <= 10; i++)
 				{
 					var xValues = InputDataList.Select(item => item.Y).ToArray();
-					var yValues = InputDataList.Select(item => (double)item.GetType().GetProperty($"Spline{i}").GetValue(item)).ToArray();
+					var yValues = InputDataList.Select(item => (double)item.GetType().GetProperty($"X{i}").GetValue(item)).ToArray();
 
 					// Получение интерполированного значения для заданного inputX
 					double interpolatedValue = CubicSplineInterpolate(inputX, xValues, yValues);
@@ -101,32 +121,57 @@ namespace Chislen_Analiz
 						lineSeries.Points.Add(new DataPoint(xValues[j], yValues[j]));
 					}
 
-					// Добавление интерполированной точки на график
-					var interpolatedPoint = new ScatterSeries { MarkerType = MarkerType.Circle, Title = $"Interpolated Spline {i}" };
-					interpolatedPoint.Points.Add(new ScatterPoint(inputX, interpolatedValue));
-
-					// Сохранение интерполированных точек в виде ScatterPoint для всех xValues
-					for (int j = 0; j < xValues.Length; j++)
+					// Добавляем интерполированные данные в коллекцию
+					var interpolatedData = new InterpolatedData
 					{
-						var point = new ScatterPoint(xValues[j], yValues[j]);
-						interpolatedPoint.Points.Add(point);
-					}
-
+						X = inputX
+					};
+					interpolatedData.GetType().GetProperty($"Spline{i}").SetValue(interpolatedData, interpolatedValue);
+					InterpolatedDataList.Add(interpolatedData); // Добавление интерполированных данных в таблицу
 					plotModel.Series.Add(lineSeries);
-					plotModel.Series.Add(interpolatedPoint);
 				}
 
-				// Обновление таблицы с интерполированными значениями
-				InterpolatedDataGrid.Items.Clear();
-				InterpolatedDataGrid.Items.Add(interpolatedValues);
+				// Добавление точек исходных данных
+				var scatterSeries = new ScatterSeries { MarkerType = MarkerType.Circle, MarkerSize = 4, Title = "Исходные данные" };
+				for (int i = 0; i < InputDataList.Count; i++)
+				{
+					var inputData = InputDataList[i];
+					for (int j = 1; j <= 10; j++)
+					{
+						var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
+						scatterSeries.Points.Add(new ScatterPoint(inputData.Y, splineValue));
+					}
+				}
+				plotModel.Series.Add(scatterSeries); // Добавляем серию точек на график
+
+				// Подписи точек
+				for (int i = 0; i < InputDataList.Count; i++)
+				{
+					var inputData = InputDataList[i];
+					for (int j = 1; j <= 10; j++)
+					{
+						var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
+						var textAnnotation = new TextAnnotation
+						{
+							Text = $"({inputData.Y}, {splineValue})",
+							TextPosition = new DataPoint(inputData.Y, splineValue),
+							Stroke = OxyColors.Transparent,
+							TextColor = OxyColors.Black // Изменено с Fill на TextColor
+						};
+						plotModel.Annotations.Add(textAnnotation);
+					}
+				}
+
+				plotModel.InvalidatePlot(true);
 				PlotView.Model = plotModel;
 			}
 			else
 			{
-				MessageBox.Show("Введите значение в диапазоне 1.0 - 2.0");
+				MessageBox.Show("Введите корректное значение x в диапазоне от 1.0 до 2.0.");
 			}
-
 		}
+
+
 
 		private double CubicSplineInterpolate(double x, double[] xs, double[] ys)
 		{
