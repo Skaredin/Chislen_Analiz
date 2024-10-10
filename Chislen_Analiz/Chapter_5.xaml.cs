@@ -52,7 +52,7 @@ namespace Chislen_Analiz
 
 			double[,] values = {
 				 // Первая таблица
-			  {1.0, 1.0, 1.1, 0.9, 0.9, 0.8, 1.1, 1.0, 1.2, 1.2, 1.1},
+	//{1.0, 1.0, 1.1, 0.9, 0.9, 0.8, 1.1, 1.0, 1.2, 1.2, 1.1},
 	//{1.2, 2.1, 2.2, 2.0, 1.9, 2.0, 2.2, 2.1, 1.8, 2.0, 1.9},
 	//{1.4, 2.9, 3.2, 3.0, 3.2, 2.9, 3.2, 3.1, 3.2, 3.0, 3.2},
 	//{1.6, 3.8, 4.2, 3.8, 3.8, 4.0, 4.2, 3.8, 4.1, 3.8, 3.8},
@@ -132,7 +132,12 @@ namespace Chislen_Analiz
 				}
 
 				// Добавление точек исходных данных
-				var scatterSeries = new ScatterSeries { MarkerType = MarkerType.Circle, MarkerSize = 4, Title = "Исходные данные" };
+				var scatterSeries = new ScatterSeries { 
+					MarkerType = MarkerType.Circle, 
+					MarkerSize = 6, 
+					Title = "Исходные данные" 
+				};
+
 				for (int i = 0; i < InputDataList.Count; i++)
 				{
 					var inputData = InputDataList[i];
