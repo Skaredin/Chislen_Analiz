@@ -25,7 +25,7 @@
 
         <Button Content="Рассчитать" VerticalAlignment="Top" Margin="447,46,497,0" Click="CalculateButton_Click"/>
 
-        <DataGrid Name="InterpolatedDataGrid" Margin="746,-6,10,270" AutoGenerateColumns="False" CanUserAddRows="False" Height="200">
+        <DataGrid Name="ResultsDataGrid" Margin="746,-6,10,270" AutoGenerateColumns="False" CanUserAddRows="False" Height="200">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Значение x" Binding="{Binding X}" Width="*"/>
                 <DataGridTextColumn Header="Spline1" Binding="{Binding Spline1}" Width="*"/>
