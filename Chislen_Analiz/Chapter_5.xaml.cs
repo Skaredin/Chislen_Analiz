@@ -100,83 +100,103 @@ namespace Chislen_Analiz
 		{
 			if (double.TryParse(XInput.Text, out double inputX) && inputX >= 1.0 && inputX <= 2.0)
 			{
-				var plotModel = new PlotModel { Title = "Кубическая интерполяция" };
-				var interpolatedValues = new InterpolatedData { X = inputX };
+
+				// Получаем значения X и Y
+				bool isXValid = double.TryParse(XInput.Text, out double inputX1);
+				bool isYValid = double.TryParse(YInput.Text, out double inputY1);
+
+
+
+
 				InterpolatedDataList.Clear();
 
-				// Проход по всем сплайнам
-				for (int i = 1; i <= 10; i++)
+				// Проверяем, что X находится в диапазоне и определяем, был ли введен Y
+				if (isXValid && inputX1 >= 1.0 && inputX1 <= 2.0)
 				{
-					var xValues = InputDataList.Select(item => item.Y).ToArray();
-					var yValues = InputDataList.Select(item => (double)item.GetType().GetProperty($"X{i}").GetValue(item)).ToArray();
+					var plotModel = new PlotModel { Title = "Кубическая интерполяция" };
+					var interpolatedValues = new InterpolatedData { X = inputX1 };
+					InterpolatedDataList.Clear();
 
-					// Получение интерполированного значения для заданного inputX
-					double interpolatedValue = CubicSplineInterpolate(inputX, xValues, yValues);
-					interpolatedValues.GetType().GetProperty($"Spline{i}").SetValue(interpolatedValues, interpolatedValue);
-
-					// Добавление значений сплайна на график
-					var lineSeries = new LineSeries { Title = $"Spline {i}" };
-					for (int j = 0; j < xValues.Length; j++)
+					for (int i = 1; i <= 10; i++)
 					{
-						lineSeries.Points.Add(new DataPoint(xValues[j], yValues[j]));
-					}
+						var xValues = InputDataList.Select(item => item.Y).ToArray();
+						var yValues = InputDataList.Select(item => (double)item.GetType().GetProperty($"X{i}").GetValue(item)).ToArray();
 
-					// Добавляем интерполированные данные в коллекцию
-					var interpolatedData = new InterpolatedData
-					{
-						X = inputX
-					};
-					interpolatedData.GetType().GetProperty($"Spline{i}").SetValue(interpolatedData, interpolatedValue);
-					InterpolatedDataList.Add(interpolatedData); // Добавление интерполированных данных в таблицу
-					plotModel.Series.Add(lineSeries);
-				}
+						double interpolatedValue = CubicSplineInterpolate(inputX1, xValues, yValues);
+						interpolatedValues.GetType().GetProperty($"Spline{i}").SetValue(interpolatedValues, interpolatedValue);
 
-				// Добавление точек исходных данных
-				var scatterSeries = new ScatterSeries { 
-					MarkerType = MarkerType.Circle, 
-					MarkerSize = 6, 
-					Title = "Исходные данные" 
-				};
-
-				for (int i = 0; i < InputDataList.Count; i++)
-				{
-					var inputData = InputDataList[i];
-					for (int j = 1; j <= 10; j++)
-					{
-						var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
-						scatterSeries.Points.Add(new ScatterPoint(inputData.Y, splineValue));
-					}
-				}
-				plotModel.Series.Add(scatterSeries); // Добавляем серию точек на график
-
-				// Подписи точек
-				for (int i = 0; i < InputDataList.Count; i++)
-				{
-					var inputData = InputDataList[i];
-					for (int j = 1; j <= 10; j++)
-					{
-						var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
-						var textAnnotation = new TextAnnotation
+						var lineSeries = new LineSeries { Title = $"Spline {i}" };
+						for (int j = 0; j < xValues.Length; j++)
 						{
-							Text = $"({inputData.Y}, {splineValue})",
-							TextPosition = new DataPoint(inputData.Y, splineValue),
-							Stroke = OxyColors.Transparent,
-							TextColor = OxyColors.Black // Изменено с Fill на TextColor
-						};
-						plotModel.Annotations.Add(textAnnotation);
+							lineSeries.Points.Add(new DataPoint(xValues[j], yValues[j]));
+						}
+
+						var interpolatedData = new InterpolatedData { X = inputX1 };
+						interpolatedData.GetType().GetProperty($"Spline{i}").SetValue(interpolatedData, interpolatedValue);
+						InterpolatedDataList.Add(interpolatedData);
+						plotModel.Series.Add(lineSeries);
 					}
+					// Отображение точки на графике, если введены оба значения X и Y
+					if (isYValid)
+					{
+						var pointAnnotation = new PointAnnotation
+						{
+							X = inputX1,
+							Y = inputY1,
+							Text = $"({inputX}; {inputY1})",
+							Shape = MarkerType.Circle,
+
+						};
+						plotModel.Annotations.Add(pointAnnotation);
+					}
+					// Добавление точек исходных данных
+					var scatterSeries = new ScatterSeries
+					{
+						MarkerType = MarkerType.Circle,
+						MarkerSize = 6,
+						Title = "Исходные данные"
+					};
+
+					for (int i = 0; i < InputDataList.Count; i++)
+					{
+						var inputData = InputDataList[i];
+						for (int j = 1; j <= 10; j++)
+						{
+							var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
+							scatterSeries.Points.Add(new ScatterPoint(inputData.Y, splineValue));
+						}
+
+					}
+					plotModel.Series.Add(scatterSeries); // Добавляем серию точек на график
+
+					// Подписи точек
+					for (int i = 0; i < InputDataList.Count; i++)
+					{
+						var inputData = InputDataList[i];
+						for (int j = 1; j <= 10; j++)
+						{
+							var splineValue = (double)inputData.GetType().GetProperty($"X{j}").GetValue(inputData);
+							var textAnnotation = new TextAnnotation
+							{
+								Text = $"({inputData.Y}; {splineValue})",
+								TextPosition = new DataPoint(inputData.Y, splineValue),
+								Stroke = OxyColors.Transparent,
+								TextColor = OxyColors.Black // Изменено с Fill на TextColor
+							};
+							plotModel.Annotations.Add(textAnnotation);
+						}
+					}
+
+					plotModel.InvalidatePlot(true);
+					PlotView.Model = plotModel;
 				}
+				else
+				{
+					MessageBox.Show("Введите корректное значение x в диапазоне от 1.0 до 2.0.");
+				}
+			}
 
-				plotModel.InvalidatePlot(true);
-				PlotView.Model = plotModel;
-			}
-			else
-			{
-				MessageBox.Show("Введите корректное значение x в диапазоне от 1.0 до 2.0.");
-			}
 		}
-
-
 
 		private double CubicSplineInterpolate(double x, double[] xs, double[] ys)
 		{
