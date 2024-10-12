@@ -15,9 +15,8 @@
             <TextBlock Text="Уравнение 4:" />
             <TextBox Name="Equation4TextBox" Margin="0,5" Width="400" />
         </StackPanel>
-
-        <Button Content="Решить систему" Width="150" Height="30" Margin="10,200,0,0" VerticalAlignment="Top" Click="SolveButton_Click"/>
-
+        <Button Content="Решить систему" Width="150" Height="30" Margin="612,45,38,0" VerticalAlignment="Top" Click="SolveButton_Click"/>
+        <Button Content="Обратная " Width="150" Height="30" Margin="612,80,38,0" VerticalAlignment="Top" Click="SolveButton1_Click"/>
         <DataGrid Name="ResultDataGrid" Margin="10,240,10,10" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Шаг" Binding="{Binding Step}" Width="*"/>
