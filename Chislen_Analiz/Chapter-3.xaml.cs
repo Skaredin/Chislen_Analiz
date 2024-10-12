@@ -118,8 +118,16 @@ namespace Chislen_Analiz
 			}
 			plotModel.Series.Add(scatterSeries);
 
+			// Добавляем линию, соединяющую точки
+			var connectingLineSeries = new LineSeries { Color = OxyColors.Red, LineStyle = LineStyle.Solid, StrokeThickness = 2 };
+			for (int i = 0; i < xValues.Count; i++)
+			{
+				connectingLineSeries.Points.Add(new DataPoint(xValues[i], yValues[i]));
+			}
+			plotModel.Series.Add(connectingLineSeries);
+
 			// Добавляем интерполяционную кривую
-			var lineSeries = new LineSeries { Color = lineColor };
+			var lineSeries = new LineSeries { Color = lineColor, LineStyle = LineStyle.Solid };
 			double step = (xValues[xValues.Count - 1] - xValues[0]) / 100.0;
 			for (double x = xValues[0]; x <= xValues[xValues.Count - 1]; x += step)
 			{
@@ -129,6 +137,50 @@ namespace Chislen_Analiz
 
 			PlotView.Model = plotModel;
 		}
+
+		private void AddPoint_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Парсинг значений
+				var (xValues, yValues) = ParseInput(PointsInput.Text);
+				double x = double.Parse(XInput.Text);
+
+				// Вычисляем значение интерполяции для Лагранжа
+				List<CalculationStep> lagrangeSteps;
+				double lagrangeResult = LagrangeInterpolation.Interpolate(xValues, yValues, x, out lagrangeSteps);
+
+				// Вычисляем значение интерполяции для Ньютона
+				List<CalculationStep> newtonSteps;
+				double newtonResult = NewtonInterpolation.Interpolate(xValues, yValues, x, out newtonSteps);
+
+				// Отображаем результаты в текстовых полях
+				LagrangeResult.Text = $"L({x}) = {lagrangeResult}";
+				NewtonResult.Text = $"N({x}) = {newtonResult}";
+
+				// Обновляем таблицу шагов для выбранного метода (например, Лагранжа)
+				StepsDataGrid.ItemsSource = lagrangeSteps;
+
+				// Добавляем точку к графику
+				AddPointToPlot(x, lagrangeResult, OxyColors.Blue);
+				AddPointToPlot(x, newtonResult, OxyColors.Red);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Ошибка: " + ex.Message);
+			}
+		}
+
+		private void AddPointToPlot(double x, double y, OxyColor color)
+		{
+			var scatterSeries = new ScatterSeries { MarkerType = MarkerType.Circle, MarkerFill = color };
+			scatterSeries.Points.Add(new ScatterPoint(x, y));
+
+			// Добавляем серию с новой точкой к графику
+			PlotView.Model.Series.Add(scatterSeries);
+			PlotView.InvalidatePlot(true);
+		}
+
 	}
 
 	public static class LagrangeInterpolation
